@@ -6,17 +6,14 @@ const
 /* GET home page. */
 router.get('/', function(req, res) {
   var books = nano.db.use('books');
-  books.list(function(err, body) {
+  books.view('books', 'get_proposals', function(err, body) {
     if(err){
+      console.log(err);
       throw err;
     }
 
-    body.rows.forEach(function(doc) {
-      console.log(doc);
-    });
+    res.render('index', { books: body.rows });
   });
-
-  res.render('index', { title: 'Express' });
 });
 
 module.exports = router;

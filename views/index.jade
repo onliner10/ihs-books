@@ -1,5 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 IHS Books
+  each book in books
+    .proposed_book
+      h1= book.title

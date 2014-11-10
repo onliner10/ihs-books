@@ -5,8 +5,19 @@ nano.db.create('books')
 
 var books = nano.db.use('books');
 books.insert(
-  { "views":
-    { "get_proposals":
-      { "map": function(doc) { emit([doc.title, doc.google_books_id, votes], doc._id); } }
+  {
+    _id:"_design/books",
+    language: "javascript",
+    views: {
+      get_proposals: {
+        map: function(doc) {
+          emit(doc._id,
+            {
+              title: doc.title,
+              google_books_id: doc.google_books_id,
+              votes: doc.votes
+            });
+        }
+      }
     }
   });
