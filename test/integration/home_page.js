@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'test';
 const
   http = require('http'),
-  app = require('../../index'),
+  app = require('../../app'),
   Browser = require('zombie'),
   assert = require('assert'),
   nano = require('nano')(process.env.DB_HOST);
