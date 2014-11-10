@@ -7,7 +7,8 @@
     "test": "foreman run mocha --recursive test"
   },
   "dependencies" : {
-    "nano" : "latest"
+    "nano" : "latest",
+    "express" : "latest"
   },
   "devDependencies" : {
     "mocha" : "latest",

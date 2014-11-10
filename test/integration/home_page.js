@@ -13,13 +13,15 @@ describe('home page', function() {
 
       testDatabase.insert({
         id: "guid1",
-        google_boks_id: "aRLyxbyMeVEC",
+        google_books_id: "aRLyxbyMeVEC",
+        title: "Building Node Applications with MongoDB and Backbone",
         votes: 2
       }, "proposed_book", function(err, body) { });
 
       testDatabase.insert({
         id: "guid2",
-        google_boks_id: "2cwMAQAAMAAJ",
+        google_books_id: "2cwMAQAAMAAJ",
+        title: "Tackling vacant land",
         votes: 1
       }, "proposed_book", function(err, body) { });
   });
@@ -33,19 +35,12 @@ describe('home page', function() {
     this.browser.visit('/', done);
   });
 
-  it('should list all books proposed', function() {
-    assert.ok(this.browser.success);
+  before('get all returned books from output html', function() {
+    this.returnedBooks = this.browser.queryAll(".proposed_book");
+  });
 
-    var returnedBooks = this.browser.queryAll(".proposed_book");
-
-    assert.lengthOf(returnedBooks, 2, 'homepage shows all the propositions');
-    assert.equals(
-      returnedBooks[0].text("h1"),
-      "Building Node Applications with MongoDB and Backbone");
-
-    assert.equals(
-      returnedBooks[1].text("h1"),
-      "Tackling vacant land");
+  it('should list two books from DB', function() {
+    assert.equal(this.returnedBooks.length, 2);
   });
 
   after(function(done) {
