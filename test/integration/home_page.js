@@ -77,6 +77,17 @@ describe('home page', function(done) {
       assert.equal(titles[1], "Tackling vacant land");
     });
 
+    it('books should have small thumbnails', function() {
+      var thumbnails = this.browser
+                           .queryAll('.proposed_book .thumbnail')
+                           .map(function(vote) {
+                             return vote.getAttribute('src');
+                           });;
+
+      assert.equal(thumbnails[0], "small_thumbnail1");
+      assert.equal(thumbnails[1], "small_thumbnail2");
+    });
+
     after(function(done) {
       nano.db.destroy('books')
       this.server.close(done);

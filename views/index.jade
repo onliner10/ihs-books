@@ -4,5 +4,6 @@ block content
   h1 IHS Books
   each book in books
     .proposed_book
+      img(class='thumbnail', src=book.thumbnails.small)
       h1= book.title
       p(class='votes')= book.votes
