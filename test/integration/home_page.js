@@ -17,6 +17,10 @@ describe('home page', function(done) {
         id: "guid1",
         google_books_id: "aRLyxbyMeVEC",
         title: "Building Node Applications with MongoDB and Backbone",
+        thumbnails: {
+          big:"big_thumbnail1",
+          small: "small_thumbnail1"
+        },
         votes: 2
       }
       , function(_,_) { });
@@ -26,6 +30,10 @@ describe('home page', function(done) {
         id: "guid2",
         google_books_id: "2cwMAQAAMAAJ",
         title: "Tackling vacant land",
+        thumbnails: {
+          big:"big_thumbnail2",
+          small: "small_thumbnail2"
+        },
         votes: 1
       }, done);
     });
@@ -39,12 +47,34 @@ describe('home page', function(done) {
       this.browser.visit('/', done);
     });
 
-    before('get all returned books from output html', function() {
-      this.returnedBooks = this.browser.queryAll(".proposed_book");
-    });
 
     it('should list two books from DB', function() {
-      assert.equal(this.returnedBooks.length, 2);
+      var returnedBooks = this.browser
+                              .queryAll(".proposed_book");
+
+      assert.equal(returnedBooks.length, 2);
+    });
+
+    it('should start with the book with higher votes', function() {
+      var votes = this.browser
+                      .queryAll('.proposed_book .votes')
+                      .map(function(vote) {
+                        return vote.textContent;
+                      });
+
+      assert.deepEqual(["2","1"], votes);
+    });
+
+
+    it('books should have correct titles', function() {
+      var titles = this.browser
+                       .queryAll('.proposed_book h1')
+                       .map(function(vote) {
+                         return vote.textContent;
+                       });;
+
+      assert.equal(titles[0], "Building Node Applications with MongoDB and Backbone");
+      assert.equal(titles[1], "Tackling vacant land");
     });
 
     after(function(done) {

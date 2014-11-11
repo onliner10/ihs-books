@@ -14,6 +14,7 @@ books.insert(
           emit(doc._id,
             {
               title: doc.title,
+              thumbnails: doc.thumbnails,
               google_books_id: doc.google_books_id,
               votes: doc.votes
             });
