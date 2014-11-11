@@ -6,9 +6,11 @@ const
   assert = require('assert'),
   nano = require('nano')(process.env.DB_HOST);
 
-require('../../db_migrations/001_Create_BooksDb.js');
-
 describe('home page', function(done) {
+  before('run db migration', function(done) {
+    require('../../db_migrations/001_Create_BooksDb.js')(done);
+  });
+
   before('put two books into database', function() {
     var testDatabase = nano.db.use('books');
 
@@ -86,6 +88,17 @@ describe('home page', function(done) {
 
       assert.equal(thumbnails[0], "small_thumbnail1");
       assert.equal(thumbnails[1], "small_thumbnail2");
+    });
+
+    it('should display search form for proposing new book', function() {
+      var search_input = this.browser
+                            .query('#propose_search_query');
+
+      var propose_form = this.browser
+                             .query('#propose_form');
+
+      assert.ok(search_input);
+      assert.ok(propose_form);
     });
 
     after(function(done) {

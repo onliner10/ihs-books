@@ -2,6 +2,10 @@ extends layout
 
 block content
   h1 IHS Books
+  form(method='GET', action='propose', id='propose_form')
+    input(id='propose_search_query',type='text',value='',placeholder='Node.js the right way',name='query')
+    input(type='submit', value='Go!')
+      
   each book in books
     .proposed_book
       img(class='thumbnail', src=book.thumbnails.small)
